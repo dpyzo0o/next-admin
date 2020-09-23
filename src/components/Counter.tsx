@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'antd';
-import styles from './Counter.module.less';
+import styles from './Counter.less';
 
 function Counter(): JSX.Element {
   const [count, setCount] = React.useState(0);

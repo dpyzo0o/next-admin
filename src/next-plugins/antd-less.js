@@ -27,6 +27,71 @@ function handleServer(config) {
 }
 
 /**
+ * Auto detect less module styles
+ */
+function generateLessModuleRule(sassRule, lessLoaderOptions) {
+  // copy rules
+  const lessRule = cloneDeep(sassRule);
+  lessRule.test = /\.less$/;
+  lessRule.resourceQuery = /modules/;
+
+  // replace sass-loader with less-loader
+  lessRule.use.splice(
+    lessRule.use.findIndex(x => x.loader.includes('sass-loader')),
+    1,
+    {
+      loader: 'less-loader',
+      options: {
+        sourceMap: true,
+        lessOptions: lessLoaderOptions,
+      },
+    }
+  );
+
+  // change css-loader configs
+  const cssLoaderIndex = lessRule.use.findIndex(x => x.loader.includes('css-loader'));
+  const cssLoader = lessRule.use[cssLoaderIndex];
+  cssLoader.options.modules = {
+    localIdentName: '[local]___[hash:base64:5]',
+  };
+
+  return lessRule;
+}
+
+/**
+ * Process antd less files
+ * @param {*} sassRule
+ * @param {*} lessLoaderOptions
+ */
+function generateLessRule(sassRule, lessLoaderOptions) {
+  // copy rules
+  const lessRule = cloneDeep(sassRule);
+  lessRule.test = /\.less$/;
+
+  // enable less-loader to process less files from node_modules
+  delete lessRule.issuer;
+
+  // replace sass-loader with less-loader
+  lessRule.use.splice(
+    lessRule.use.findIndex(x => x.loader.includes('sass-loader')),
+    1,
+    {
+      loader: 'less-loader',
+      options: {
+        sourceMap: true,
+        lessOptions: lessLoaderOptions,
+      },
+    }
+  );
+
+  // change css-loader configs
+  const cssLoaderIndex = lessRule.use.findIndex(x => x.loader.includes('css-loader'));
+  lessRule.use[cssLoaderIndex].options.modules = false;
+
+  return lessRule;
+}
+
+/**
  * Modified from https://github.com/SolidZORO/next-plugin-antd-less
  */
 module.exports = (nextConfig = {}) => {
@@ -49,37 +114,12 @@ module.exports = (nextConfig = {}) => {
       );
       const sassRule = rules[1].oneOf[sassRuleIndex];
 
-      // copy rules
-      const lessRule = cloneDeep(sassRule);
-      lessRule.test = /\.less$/;
-
-      // enable less-loader to process less files from node_modules
-      delete lessRule.issuer;
-
-      // replace sass-loader with less-loader
-      lessRule.use.splice(
-        lessRule.use.findIndex(x => x.loader.includes('sass-loader')),
-        1,
-        {
-          loader: 'less-loader',
-          options: {
-            sourceMap: true,
-            lessOptions: lessLoaderOptions,
-          },
-        }
-      );
-
-      // change css-loader configs
-      const cssLoaderIndex = lessRule.use.findIndex(x => x.loader.includes('css-loader'));
-      const cssLoader = lessRule.use[cssLoaderIndex];
-      cssLoader.options.modules = {
-        ...cssLoader.options.modules,
-        mode: 'local',
-        auto: true,
-      };
+      const lessRule = generateLessRule(sassRule, lessLoaderOptions);
+      const lessModuleRule = generateLessModuleRule(sassRule, lessLoaderOptions);
 
       // insert less rules into webpack module rules
       rules[1].oneOf.splice(sassRuleIndex, 0, lessRule);
+      rules[1].oneOf.splice(sassRuleIndex, 0, lessModuleRule);
       config.module.rules = rules;
 
       if (isServer) {

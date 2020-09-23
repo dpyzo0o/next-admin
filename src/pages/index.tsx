@@ -1,5 +1,5 @@
 import Counter from 'src/components/Counter';
-import styles from './index.module.less';
+import styles from './index.less';
 
 export default function Index(): JSX.Element {
   return (
