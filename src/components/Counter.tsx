@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from 'antd';
 import styles from './Counter.less';
 
-function Counter(): JSX.Element {
+function Counter() {
   const [count, setCount] = React.useState(0);
 
   return (

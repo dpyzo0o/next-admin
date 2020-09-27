@@ -50,7 +50,7 @@ export default class Document extends NextDocument {
     return { ...initialProps };
   }
 
-  render(): JSX.Element {
+  render() {
     return (
       <Html>
         <InlineStylesHead />

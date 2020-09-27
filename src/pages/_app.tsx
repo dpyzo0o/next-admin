@@ -1,16 +1,22 @@
+import 'src/styles/global.css';
 import React from 'react';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
-import 'src/styles/global.css';
+import { Provider } from 'next-auth/client';
+import AppLayout from 'src/components/AppLayout';
 
-function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <React.Fragment>
       <Head>
         <title>Next Admin</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Component {...pageProps} />
+      <Provider session={pageProps.session}>
+        <AppLayout>
+          <Component {...pageProps} />
+        </AppLayout>
+      </Provider>
     </React.Fragment>
   );
 }
