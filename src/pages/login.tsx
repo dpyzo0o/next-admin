@@ -1,9 +1,10 @@
+import React from 'react';
 import { Form, Input, Button } from 'antd';
 import { Store } from 'antd/lib/form/interface';
 import { signIn } from 'next-auth/client';
 import styles from './login.less';
 
-export default function Login() {
+function Login() {
   const [form] = Form.useForm();
 
   const handleFinish = (values: Store) => {
@@ -11,7 +12,7 @@ export default function Login() {
     signIn('credentials', {
       username,
       password,
-      callbackUrl: 'http://localhost:3000',
+      callbackUrl: 'http://localhost:3000/dashboard',
     });
   };
 
@@ -36,3 +37,7 @@ export default function Login() {
     </div>
   );
 }
+
+Login.layout = React.Fragment;
+
+export default Login;

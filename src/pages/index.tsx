@@ -1,10 +1,9 @@
-import { Button } from 'antd';
-import Router from 'next/router';
-import { signOut, useSession } from 'next-auth/client';
+import React from 'react';
+import { useUser } from 'src/utils/auth';
 import styles from './index.less';
 
-export default function Index() {
-  const [session, loading] = useSession();
+function Index() {
+  const [user] = useUser();
 
   return (
     <div className={styles.container}>
@@ -17,18 +16,12 @@ export default function Index() {
       </p>
 
       <div>
-        <Button type="primary" onClick={() => Router.push('/login')}>
-          Login
-        </Button>
-        <Button type="primary" onClick={signOut}>
-          Logout
-        </Button>
-      </div>
-
-      <div>
-        {loading && <span>session loading...</span>}
-        <pre>{JSON.stringify(session)}</pre>
+        <pre>{JSON.stringify(user)}</pre>
       </div>
     </div>
   );
 }
+
+Index.layout = React.Fragment;
+
+export default Index;

@@ -5,7 +5,13 @@ import { AppProps } from 'next/app';
 import { Provider } from 'next-auth/client';
 import AppLayout from 'src/components/AppLayout';
 
-function MyApp({ Component, pageProps }: AppProps) {
+type MyAppProps = AppProps & {
+  Component: AppProps['Component'] & { layout?: React.ComponentType };
+};
+
+function MyApp({ Component, pageProps }: MyAppProps) {
+  const Layout = Component.layout ?? AppLayout;
+
   return (
     <React.Fragment>
       <Head>
@@ -13,9 +19,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Provider session={pageProps.session}>
-        <AppLayout>
+        <Layout>
           <Component {...pageProps} />
-        </AppLayout>
+        </Layout>
       </Provider>
     </React.Fragment>
   );
