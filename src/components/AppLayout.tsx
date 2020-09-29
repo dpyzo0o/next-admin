@@ -6,6 +6,7 @@ import {
   MenuFoldOutlined,
   DashboardOutlined,
   UserOutlined,
+  CheckCircleOutlined,
 } from '@ant-design/icons';
 import { useBoolean } from 'ahooks';
 import { useRouter } from 'next/router';
@@ -47,13 +48,13 @@ function AppLayout({ children }: AppLayoutProps) {
 
   return (
     <Layout style={{ minHeight: '100vh' }} hasSider>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
+      <Sider className={styles.sider} width={220} trigger={null} collapsible collapsed={collapsed}>
         <div className={styles.logo} />
         <Menu
           theme="dark"
           mode="inline"
           selectedKeys={[pathname]}
-          defaultOpenKeys={['sub1']}
+          defaultOpenKeys={['/account']}
           onClick={({ key }) => router.push(key.toString())}
         >
           <Menu.Item key="/dashboard" icon={<DashboardOutlined />}>
@@ -62,13 +63,16 @@ function AppLayout({ children }: AppLayoutProps) {
           <Menu.Item key="/notification" icon={<NotificationOutlined />}>
             Notification
           </Menu.Item>
+          <Menu.Item key="/result" icon={<CheckCircleOutlined />}>
+            Result
+          </Menu.Item>
           <SubMenu key="/account" icon={<UserOutlined />} title="Account">
             <Menu.Item key="/account/center">Account Center</Menu.Item>
             <Menu.Item key="/account/settings">Account Settings</Menu.Item>
           </SubMenu>
         </Menu>
       </Sider>
-      <Layout>
+      <Layout style={{ marginLeft: collapsed ? 80 : 220, transition: 'all .2s' }}>
         <Header className={styles.header}>
           {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
             className: styles.trigger,
@@ -91,7 +95,10 @@ function AppLayout({ children }: AppLayoutProps) {
         </Header>
         <Content className={styles.content}>{children}</Content>
         <Footer className={styles.footer}>
-          Next Admin ©2020 Created by <a href="https://github.com/dpyzo0o">dpyzo0o</a>
+          Next Admin ©2020 Created by{' '}
+          <a href="https://github.com/dpyzo0o" target="_blank" rel="noopener noreferrer">
+            dpyzo0o
+          </a>
         </Footer>
       </Layout>
     </Layout>
