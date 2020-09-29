@@ -33,7 +33,7 @@ function AppLayout({ children }: AppLayoutProps) {
     }
 
     if (!user) {
-      router.push('/login');
+      setTimeout(() => router.push('/login'), 300);
     }
   }, [loading, router, user]);
 
@@ -90,7 +90,7 @@ function AppLayout({ children }: AppLayoutProps) {
           </div>
         </Header>
         <Content className={styles.content}>{children}</Content>
-        <Footer style={{ textAlign: 'center' }}>
+        <Footer className={styles.footer}>
           Next Admin ©2020 Created by <a href="https://github.com/dpyzo0o">dpyzo0o</a>
         </Footer>
       </Layout>
