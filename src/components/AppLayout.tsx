@@ -82,7 +82,10 @@ function AppLayout({ children }: AppLayoutProps) {
             {user ? (
               <React.Fragment>
                 <span style={{ marginRight: 16 }}>{user.username}</span>
-                <Button type="primary" onClick={signOut}>
+                <Button
+                  type="primary"
+                  onClick={() => signOut({ callbackUrl: window.location.origin + '/login' })}
+                >
                   Logout
                 </Button>
               </React.Fragment>

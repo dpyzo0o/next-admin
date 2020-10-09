@@ -52,8 +52,10 @@ function generateLessModuleRule(sassRule, lessLoaderOptions) {
   const cssLoaderIndex = lessRule.use.findIndex(x => x.loader.includes('css-loader'));
   const cssLoader = lessRule.use[cssLoaderIndex];
   cssLoader.options.modules = {
+    ...cssLoader.options.modules,
     localIdentName: '[local]___[hash:base64:5]',
   };
+  delete cssLoader.options.modules.getLocalIdent;
 
   return lessRule;
 }

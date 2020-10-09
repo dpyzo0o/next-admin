@@ -12,7 +12,7 @@ function Login() {
     signIn('credentials', {
       username,
       password,
-      callbackUrl: 'http://localhost:3000/dashboard',
+      callbackUrl: window.location.origin + '/dashboard',
     });
   };
 
