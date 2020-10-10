@@ -7,6 +7,8 @@ import { AppProps } from 'next/app';
 import { Provider } from 'next-auth/client';
 import NProgress from 'nprogress';
 import AppLayout from 'src/components/AppLayout';
+import { withAuthentication } from 'src/hoc/withAuthentication';
+import { isProtectedRoute } from 'src/utils/auth';
 
 Router.events.on('routeChangeStart', url => {
   console.log(`Loading: ${url}`);
@@ -19,8 +21,18 @@ type MyAppProps = AppProps & {
   Component: AppProps['Component'] & { layout?: React.ComponentType };
 };
 
-function MyApp({ Component, pageProps }: MyAppProps) {
+function MyApp({ Component, pageProps, router }: MyAppProps) {
   const Layout = Component.layout ?? AppLayout;
+
+  let App: React.FC = () => (
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  );
+
+  if (isProtectedRoute(router.pathname)) {
+    App = withAuthentication(App);
+  }
 
   return (
     <React.Fragment>
@@ -29,9 +41,7 @@ function MyApp({ Component, pageProps }: MyAppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Provider session={pageProps.session}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <App />
       </Provider>
     </React.Fragment>
   );

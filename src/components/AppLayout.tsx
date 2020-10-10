@@ -1,21 +1,18 @@
 import React from 'react';
-import { Button, Layout, Menu, Spin } from 'antd';
+import { Layout, Menu } from 'antd';
 import {
   NotificationOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
   DashboardOutlined,
   UserOutlined,
   CheckCircleOutlined,
 } from '@ant-design/icons';
 import { useBoolean } from 'ahooks';
 import { useRouter } from 'next/router';
-import { signOut } from 'next-auth/client';
-import { useUser } from 'src/utils/auth';
 import styles from './AppLayout.less';
+import AppHeader from './AppHeader';
 
 const { SubMenu } = Menu;
-const { Header, Content, Sider, Footer } = Layout;
+const { Content, Sider, Footer } = Layout;
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -23,28 +20,9 @@ interface AppLayoutProps {
 
 function AppLayout({ children }: AppLayoutProps) {
   const router = useRouter();
-  const [user, loading] = useUser();
   const [collapsed, { toggle: toggleCollapsed }] = useBoolean(false);
 
   const { pathname } = router;
-
-  React.useEffect(() => {
-    if (loading) {
-      return;
-    }
-
-    if (!user) {
-      setTimeout(() => router.push('/login'), 300);
-    }
-  }, [loading, router, user]);
-
-  if (loading || !user) {
-    return (
-      <div className={styles.spinner}>
-        <Spin size="large" />
-      </div>
-    );
-  }
 
   return (
     <Layout style={{ minHeight: '100vh' }} hasSider>
@@ -73,29 +51,7 @@ function AppLayout({ children }: AppLayoutProps) {
         </Menu>
       </Sider>
       <Layout style={{ marginLeft: collapsed ? 80 : 220, transition: 'all .2s' }}>
-        <Header className={styles.header}>
-          {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-            className: styles.trigger,
-            onClick: () => toggleCollapsed(),
-          })}
-          <div>
-            {user ? (
-              <React.Fragment>
-                <span style={{ marginRight: 16 }}>{user.username}</span>
-                <Button
-                  type="primary"
-                  onClick={() => signOut({ callbackUrl: window.location.origin + '/login' })}
-                >
-                  Logout
-                </Button>
-              </React.Fragment>
-            ) : (
-              <Button type="primary" onClick={() => router.push('/login')}>
-                Login
-              </Button>
-            )}
-          </div>
-        </Header>
+        <AppHeader collapsed={collapsed} onCollapsed={() => toggleCollapsed()} />
         <Content className={styles.content}>{children}</Content>
         <Footer className={styles.footer}>
           Next Admin ©2020 Created by{' '}
