@@ -58,7 +58,6 @@ function EmotionDemo() {
       css={css`
         padding: 3rem 1rem;
         background: papayawhip;
-        height: 100vh;
         font-family: Helvetica, Arial, sans-serif;
         font-size: 24px;
       `}

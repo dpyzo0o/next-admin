@@ -1,6 +1,6 @@
 import { Spin } from 'antd';
 
-function FullPageSpinner() {
+function FullScreenSpinner() {
   return (
     <div
       css={{
@@ -17,4 +17,4 @@ function FullPageSpinner() {
   );
 }
 
-export { FullPageSpinner };
+export { FullScreenSpinner };
