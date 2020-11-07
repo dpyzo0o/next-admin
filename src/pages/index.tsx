@@ -1,27 +1,29 @@
-import React from 'react';
-import { useUser } from 'src/utils/auth';
-import styles from './index.less';
+/**
+ * This page acts as a SPA.
+ * You can treat it as equivalent to src/index.js in create-react-app
+ */
 
-function Index() {
-  const [user] = useUser();
+import * as React from 'react';
+import App from 'src/App';
+import { AppProviders } from 'src/context';
+import { isServer } from 'src/utils';
 
+function SafeHydrate({ children }: { children: React.ReactNode }) {
   return (
-    <div className={styles.container}>
-      <h1>
-        Welcome to <a href="https://github.com/dpyzo0o/next-admin">Next Admin!</a>
-      </h1>
-
-      <p className={styles.highlight}>
-        Get started by editing <code>pages/index.tsx</code>
-      </p>
-
-      <div>
-        <pre>{JSON.stringify(user)}</pre>
-      </div>
+    <div id="__next-admin" suppressHydrationWarning>
+      {isServer() ? null : children}
     </div>
   );
 }
 
-Index.layout = React.Fragment;
+function Index() {
+  return (
+    <SafeHydrate>
+      <AppProviders>
+        <App />
+      </AppProviders>
+    </SafeHydrate>
+  );
+}
 
 export default Index;
