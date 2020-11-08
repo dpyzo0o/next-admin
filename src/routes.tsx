@@ -1,8 +1,9 @@
+import * as React from 'react';
 import { PartialRouteObject } from 'react-router';
-import { Home } from './views/Home';
-import { Dashboard } from './views/Dashboard';
-import { EmotionDemo } from './views/EmotionDemo';
-import { NotFound } from './views/NotFound';
+import Home from './views/Home';
+import Dashboard from './views/Dashboard';
+import EmotionDemo from './views/EmotionDemo';
+import NotFound from './views/NotFound';
 import { FullScreenSpinner } from './components/FullScreenSpinner';
 import { Layout } from './components/Layout';
 

@@ -71,4 +71,4 @@ function EmotionDemo() {
   );
 }
 
-export { EmotionDemo };
+export default EmotionDemo;
