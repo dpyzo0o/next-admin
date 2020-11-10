@@ -8,6 +8,12 @@ import App from 'src/App';
 import { AppProviders } from 'src/context';
 import { isServer } from 'src/utils';
 
+if (process.env.NODE_ENV === 'development' && !isServer()) {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { worker } = require('../mocks/browser');
+  worker.start();
+}
+
 function SafeHydrate({ children }: { children: React.ReactNode }) {
   return (
     <div id="__next-admin" suppressHydrationWarning>

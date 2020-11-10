@@ -1,11 +1,16 @@
 import * as React from 'react';
 import { PartialRouteObject } from 'react-router';
-import Home from './views/Home';
-import Dashboard from './views/Dashboard';
-import EmotionDemo from './views/EmotionDemo';
-import NotFound from './views/NotFound';
-import { FullScreenSpinner } from './components/FullScreenSpinner';
+import { Navigate, Outlet } from 'react-router-dom';
 import { Layout } from './components/Layout';
+
+const Dashboard = React.lazy(() => import('./views/Dashboard'));
+const EmotionDemo = React.lazy(() => import('./views/EmotionDemo'));
+const NotFound = React.lazy(() => import('./views/NotFound'));
+const Login = React.lazy(() => import('./views/Login'));
+const Notification = React.lazy(() => import('./views/Notification'));
+const Result = React.lazy(() => import('./views/Result'));
+const AccountCenter = React.lazy(() => import('./views/Account/AccountCenter'));
+const AccountSettings = React.lazy(() => import('./views/Account/AccountSettings'));
 
 const routes: PartialRouteObject[] = [
   {
@@ -14,7 +19,7 @@ const routes: PartialRouteObject[] = [
     children: [
       {
         path: '/',
-        element: <Home />,
+        element: <Navigate to="dashboard" />,
       },
       {
         path: 'dashboard',
@@ -24,11 +29,41 @@ const routes: PartialRouteObject[] = [
         path: 'emotion',
         element: <EmotionDemo />,
       },
+      {
+        path: 'notification',
+        element: <Notification />,
+      },
+      {
+        path: 'result',
+        element: <Result />,
+      },
+      {
+        path: 'account',
+        element: <Outlet />,
+        children: [
+          {
+            path: '/',
+            element: <Navigate to="center" />,
+          },
+          {
+            path: 'center',
+            element: <AccountCenter />,
+          },
+          {
+            path: 'settings',
+            element: <AccountSettings />,
+          },
+        ],
+      },
+      {
+        path: '*',
+        element: <NotFound />,
+      },
     ],
   },
   {
-    path: 'spin',
-    element: <FullScreenSpinner />,
+    path: 'login',
+    element: <Login />,
   },
   {
     path: '*',
