@@ -1,5 +1,5 @@
 {
-  "presets": [["next/babel"]],
+  "presets": ["next/babel", "@emotion/babel-preset-css-prop"],
   "plugins": [
     [
       "import",
@@ -7,7 +7,6 @@
         "libraryName": "antd",
         "style": true
       }
-    ],
-    "@umijs/babel-plugin-auto-css-modules"
+    ]
   ]
 }
