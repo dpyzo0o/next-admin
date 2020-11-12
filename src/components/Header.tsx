@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Button, Layout } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import { useAuth } from 'src/context/auth-context';
 import { css } from '@emotion/core';
 import { useNavigate } from 'react-router';
+import { useInitialState } from 'src/context/initial-state-context';
 
 const { Header: AntHeader } = Layout;
 
@@ -14,7 +14,8 @@ interface HeaderProps {
 
 function Header({ collapsed, onCollapsed }: HeaderProps) {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { initialState } = useInitialState();
+  const { user } = initialState;
 
   return (
     <AntHeader

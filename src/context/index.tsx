@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ReactQueryConfig, ReactQueryConfigProvider } from 'react-query';
-import { AuthProvider } from './auth-context';
+import { InitialStateProvider } from './initial-state-context';
+import { AccessProvider } from './access-context';
 
 const reactQueryConfig: ReactQueryConfig = {
   queries: {
@@ -13,7 +14,9 @@ function AppProviders({ children }: React.PropsWithChildren<unknown>) {
   return (
     <ReactQueryConfigProvider config={reactQueryConfig}>
       <Router>
-        <AuthProvider>{children}</AuthProvider>
+        <InitialStateProvider>
+          <AccessProvider>{children}</AccessProvider>
+        </InitialStateProvider>
       </Router>
     </ReactQueryConfigProvider>
   );

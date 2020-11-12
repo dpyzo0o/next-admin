@@ -12,7 +12,8 @@ export const handlers = [
     return res(
       ctx.json({
         id: 1001,
-        name: 'Yang Xu',
+        name: 'dpyzo0o',
+        role: 'admin',
       }),
       ctx.delay(500)
     );

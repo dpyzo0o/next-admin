@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { useQuery } from 'react-query';
-import { useAuth } from 'src/context/auth-context';
+import { useInitialState } from 'src/context/initial-state-context';
 
 function Dashboard() {
-  const { user } = useAuth();
   const { data: appInfo } = useQuery('app-info', () =>
     fetch('/api/app-info').then(res => res.json())
   );
+  const { initialState } = useInitialState();
+  const { user } = initialState;
 
   return (
     <React.Fragment>
