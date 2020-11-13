@@ -6,7 +6,7 @@
 import * as React from 'react';
 import App from 'src/App';
 import { AppProviders } from 'src/context';
-import { isServer } from 'src/utils';
+import { isServer } from 'src/utils/misc';
 
 if (process.env.NODE_ENV === 'development' && !isServer()) {
   // eslint-disable-next-line @typescript-eslint/no-var-requires

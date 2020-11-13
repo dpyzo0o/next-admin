@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { FullScreenSpinner } from 'src/components/FullScreenSpinner';
-import { InitialState, getInitialState } from 'src/init';
+import { InitialState, getInitialState } from 'src/initialState';
 
 interface InitialStateContextValue {
   loading: boolean;
   error: any;
   initialState: InitialState;
-  setInitialState: React.Dispatch<React.SetStateAction<InitialState | undefined>>;
+  setInitialState: React.Dispatch<React.SetStateAction<InitialState>>;
   refetch: () => Promise<void>;
 }
 

@@ -1,10 +1,8 @@
 import * as React from 'react';
-import { getAccess } from 'src/access';
-import { useInitialState } from './initial-state-context';
+import { Access, getAccess } from 'src/access';
+import { useInitialState } from './InitialStateContext';
 
-type AccessContextValue = ReturnType<typeof getAccess>;
-
-const AccessContext = React.createContext<AccessContextValue | undefined>(undefined);
+const AccessContext = React.createContext<Access | undefined>(undefined);
 AccessContext.displayName = 'AccessContext';
 
 function AccessProvider({ children }: React.PropsWithChildren<unknown>) {
@@ -14,7 +12,7 @@ function AccessProvider({ children }: React.PropsWithChildren<unknown>) {
   return <AccessContext.Provider value={value}>{children}</AccessContext.Provider>;
 }
 
-function useAccess(): AccessContextValue {
+function useAccess(): Access {
   const context = React.useContext(AccessContext);
 
   if (context === undefined) {

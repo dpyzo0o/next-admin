@@ -1,4 +1,6 @@
-import { InitialState } from './init';
+import { InitialState } from './initialState';
+
+export type Access = ReturnType<typeof getAccess>;
 
 function getAccess(initialState: InitialState) {
   const { user } = initialState;

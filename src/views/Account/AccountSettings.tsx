@@ -1,5 +1,5 @@
 import { Select } from 'antd';
-import { useInitialState } from 'src/context/initial-state-context';
+import { useInitialState } from 'src/context/InitialStateContext';
 
 function AccountSettings() {
   const { initialState, setInitialState } = useInitialState();

@@ -1,4 +1,4 @@
-import { useAccess } from 'src/context/access-context';
+import { useAccess } from 'src/context/AccessContext';
 
 function AccountCenter() {
   const access = useAccess();

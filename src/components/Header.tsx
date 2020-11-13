@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Button, Layout } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import { css } from '@emotion/react';
+import { css, jsx } from '@emotion/react';
 import { useNavigate } from 'react-router';
-import { useInitialState } from 'src/context/initial-state-context';
+import { useInitialState } from 'src/context/InitialStateContext';
 
 const { Header: AntHeader } = Layout;
 
@@ -28,10 +28,9 @@ function Header({ collapsed, onCollapsed }: HeaderProps) {
         box-shadow: rgba(0, 21, 41, 0.08) 0px 1px 4px;
       `}
     >
-      {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-        style: {
+      {jsx(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+        css: {
           fontSize: 18,
-          cursor: 'pointer',
           transition: 'color 0.3s',
         },
         onClick: onCollapsed,

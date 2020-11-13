@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ReactQueryConfig, ReactQueryConfigProvider } from 'react-query';
-import { InitialStateProvider } from './initial-state-context';
-import { AccessProvider } from './access-context';
+import { InitialStateProvider } from './InitialStateContext';
+import { AccessProvider } from './AccessContext';
 
 const reactQueryConfig: ReactQueryConfig = {
   queries: {
