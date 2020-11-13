@@ -1,3 +1,4 @@
 {
-  "extends": ["@dpyzo0o/eslint-config-next"]
+  "extends": ["@dpyzo0o/eslint-config-next"],
+  "plugins": ["@emotion"]
 }

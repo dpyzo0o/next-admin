@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button, Layout } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import { css } from '@emotion/core';
+import { css } from '@emotion/react';
 import { useNavigate } from 'react-router';
 import { useInitialState } from 'src/context/initial-state-context';
 

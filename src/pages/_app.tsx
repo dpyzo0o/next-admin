@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AppProps } from 'next/app';
-import { Global, css } from '@emotion/core';
+import { Global, css } from '@emotion/react';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

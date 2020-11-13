@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { css } from '@emotion/core';
+import { css } from '@emotion/react';
 import { Layout as AntLayout, Menu, Spin } from 'antd';
 import {
   NotificationOutlined,
