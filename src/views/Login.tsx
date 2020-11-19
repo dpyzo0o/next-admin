@@ -1,13 +1,32 @@
 import * as React from 'react';
-import { Form, Input, Button } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { Form, Input, Button, message } from 'antd';
 import { Store } from 'antd/lib/form/interface';
+import http from 'src/utils/http';
+import { useInitialState } from 'src/context/InitialStateContext';
 
 function Login() {
+  const navigate = useNavigate();
   const [form] = Form.useForm();
+  const { setInitialState } = useInitialState();
 
-  const handleFinish = (values: Store) => {
-    const { username, password } = values;
-    console.log(username, password);
+  const [loading, setLoading] = React.useState(false);
+
+  const handleFinish = async (values: Store) => {
+    try {
+      setLoading(true);
+      const { data } = await http.post('/api/login', values);
+      setInitialState({
+        isLoggedIn: true,
+        user: data.data,
+      });
+
+      setLoading(false);
+      navigate('/dashboard');
+    } catch (error) {
+      setLoading(false);
+      message.error(error.response.data.message || '请求失败');
+    }
   };
 
   return (
@@ -61,7 +80,7 @@ function Login() {
             <Input.Password placeholder="Password" />
           </Form.Item>
           <Form.Item noStyle>
-            <Button type="primary" htmlType="submit" css={{ width: '100%' }}>
+            <Button type="primary" htmlType="submit" css={{ width: '100%' }} loading={loading}>
               Login
             </Button>
           </Form.Item>

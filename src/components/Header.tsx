@@ -4,6 +4,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { css, jsx } from '@emotion/react';
 import { useNavigate } from 'react-router';
 import { useInitialState } from 'src/context/InitialStateContext';
+import http from 'src/utils/http';
 
 const { Header: AntHeader } = Layout;
 
@@ -16,6 +17,15 @@ function Header({ collapsed, onCollapsed }: HeaderProps) {
   const navigate = useNavigate();
   const { initialState } = useInitialState();
   const { user } = initialState;
+
+  const handleLogout = async () => {
+    try {
+      await http.get('/api/logout');
+      navigate('/login');
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <AntHeader
@@ -38,7 +48,7 @@ function Header({ collapsed, onCollapsed }: HeaderProps) {
       <div>
         <React.Fragment>
           <span style={{ marginRight: 16 }}>{user.name}</span>
-          <Button type="primary" onClick={() => navigate('login')}>
+          <Button type="primary" onClick={handleLogout}>
             Logout
           </Button>
         </React.Fragment>

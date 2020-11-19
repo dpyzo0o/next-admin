@@ -1,11 +1,16 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { sleep } from 'src/utils/misc';
+import { withSession } from 'src/utils/session';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  await sleep(Math.floor(Math.random() * 1000));
-  res.status(200).json({
-    id: 1001,
-    name: 'dpyzo0o',
-    role: Math.random() > 0.5 ? 'admin' : 'user',
-  });
-}
+export default withSession(async (req, res) => {
+  const user = req.session.get('user');
+
+  if (user) {
+    res.json({
+      isLoggedIn: true,
+      user,
+    });
+  } else {
+    res.json({
+      isLoggedIn: false,
+    });
+  }
+});

@@ -1,19 +1,18 @@
+import http from 'src/utils/http';
 import { PromiseReturnType } from './utils/typeHelpers';
 
 interface User {
   id: number;
   name: string;
-  role: 'admin' | 'user';
+  age: number;
+  role: string;
 }
 
 export type InitialState = PromiseReturnType<typeof getInitialState>;
 
 async function getInitialState() {
-  const res = await fetch('/api/user');
-  const json: User = await res.json();
-  return {
-    user: json,
-  };
+  const { data } = await http.get<{ isLoggedIn: boolean; user: User }>('/api/user');
+  return data;
 }
 
 export { getInitialState };
