@@ -45,7 +45,7 @@ function InitialStateProvider({ children }: React.PropsWithChildren<unknown>) {
   );
 
   // show a full screen spinner before the initial state loaded
-  if (loading) {
+  if (loading && !state) {
     return <FullScreenSpinner />;
   }
 

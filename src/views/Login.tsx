@@ -8,18 +8,15 @@ import { useInitialState } from 'src/context/InitialStateContext';
 function Login() {
   const navigate = useNavigate();
   const [form] = Form.useForm();
-  const { setInitialState } = useInitialState();
+  const { refetch } = useInitialState();
 
   const [loading, setLoading] = React.useState(false);
 
   const handleFinish = async (values: Store) => {
     try {
       setLoading(true);
-      const { data } = await http.post('/api/login', values);
-      setInitialState({
-        isLoggedIn: true,
-        user: data.data,
-      });
+      await http.post('/api/login', values);
+      await refetch();
 
       setLoading(false);
       navigate('/dashboard');
