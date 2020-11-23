@@ -4,10 +4,11 @@ import shallow from 'zustand/shallow';
 import { useInitialState } from 'src/context/InitialStateContext';
 import { useCounterStore } from 'src/zustand-stores';
 import { Button } from 'antd';
+import { http } from 'src/utils/http';
 
 function Dashboard() {
   const { data: appInfo } = useQuery('app-info', () =>
-    fetch('/api/app-info').then(res => res.json())
+    http.get('/api/app-info').then(res => res.data)
   );
   const { initialState } = useInitialState();
   const { user } = initialState;

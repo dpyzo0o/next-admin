@@ -1,4 +1,4 @@
-import http from 'src/utils/http';
+import { http } from 'src/utils/http';
 import { PromiseReturnType } from './utils/typeHelpers';
 
 interface User {

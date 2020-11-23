@@ -2,14 +2,13 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, message } from 'antd';
 import { Store } from 'antd/lib/form/interface';
-import http from 'src/utils/http';
+import { http } from 'src/utils/http';
 import { useInitialState } from 'src/context/InitialStateContext';
 
 function Login() {
   const navigate = useNavigate();
   const [form] = Form.useForm();
-  const { refetch } = useInitialState();
-
+  const { initialState, refetch } = useInitialState();
   const [loading, setLoading] = React.useState(false);
 
   const handleFinish = async (values: Store) => {
@@ -17,14 +16,22 @@ function Login() {
       setLoading(true);
       await http.post('/api/login', values);
       await refetch();
-
       setLoading(false);
-      navigate('/dashboard');
     } catch (error) {
       setLoading(false);
       message.error(error.response.data.message || '请求失败');
     }
   };
+
+  React.useEffect(() => {
+    if (loading) {
+      return;
+    }
+
+    if (initialState.isLoggedIn) {
+      navigate('/');
+    }
+  }, [initialState.isLoggedIn, loading, navigate]);
 
   return (
     <div

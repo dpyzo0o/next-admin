@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { withIronSession } from 'next-iron-session';
+import { withIronSession, Session } from 'next-iron-session';
 
 type Handler = (
-  req: NextApiRequest & { session: any },
+  req: NextApiRequest & { session: Session },
   res: NextApiResponse
 ) => void | Promise<void>;
 

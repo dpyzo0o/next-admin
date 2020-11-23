@@ -71,4 +71,6 @@ const routes: PartialRouteObject[] = [
   },
 ];
 
-export { routes };
+const publicRoutes = ['/login'];
+
+export { routes, publicRoutes };
