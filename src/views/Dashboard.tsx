@@ -23,8 +23,6 @@ function Dashboard() {
     shallow
   );
 
-  console.log('render');
-
   return (
     <React.Fragment>
       <h1>Dashboard</h1>

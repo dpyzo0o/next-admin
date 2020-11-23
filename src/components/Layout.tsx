@@ -2,14 +2,9 @@ import * as React from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { css } from '@emotion/react';
 import { Layout as AntLayout, Menu, Spin } from 'antd';
-import {
-  NotificationOutlined,
-  DashboardOutlined,
-  UserOutlined,
-  CheckCircleOutlined,
-  SkinOutlined,
-} from '@ant-design/icons';
 import { useBoolean } from 'ahooks';
+import { useAccess } from 'src/context/AccessContext';
+import { getMenuConfig } from '../routes';
 import { Header } from './Header';
 import { Footer } from './Footer';
 
@@ -20,6 +15,27 @@ function Layout() {
   const [collapsed, { toggle: toggleCollapsed }] = useBoolean(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const access = useAccess();
+
+  const menuConfig = getMenuConfig(access);
+
+  const renderMenu = (menus: typeof menuConfig['menus']): React.ReactNode => {
+    return menus.map(menu => {
+      if (!menu.children) {
+        return (
+          <Menu.Item key={menu.path} icon={menu.icon}>
+            {menu.title}
+          </Menu.Item>
+        );
+      } else {
+        return (
+          <SubMenu key={menu.path} icon={menu.icon} title={menu.title}>
+            {renderMenu(menu.children)}
+          </SubMenu>
+        );
+      }
+    });
+  };
 
   return (
     <AntLayout css={{ minHeight: '100vh' }} hasSider>
@@ -47,25 +63,10 @@ function Layout() {
           theme="dark"
           mode="inline"
           selectedKeys={[pathname]}
-          defaultOpenKeys={['/account']}
+          defaultOpenKeys={menuConfig.defaultOpenKeys}
           onClick={({ key }) => navigate(key.toString())}
         >
-          <Menu.Item key="/dashboard" icon={<DashboardOutlined />}>
-            Dashboard
-          </Menu.Item>
-          <Menu.Item key="/emotion" icon={<SkinOutlined />}>
-            Emotion
-          </Menu.Item>
-          <Menu.Item key="/notification" icon={<NotificationOutlined />}>
-            Notification
-          </Menu.Item>
-          <Menu.Item key="/result" icon={<CheckCircleOutlined />}>
-            Result
-          </Menu.Item>
-          <SubMenu key="/account" icon={<UserOutlined />} title="Account">
-            <Menu.Item key="/account/center">Account Center</Menu.Item>
-            <Menu.Item key="/account/settings">Account Settings</Menu.Item>
-          </SubMenu>
+          {renderMenu(menuConfig.menus)}
         </Menu>
       </Sider>
       <AntLayout css={{ marginLeft: collapsed ? 80 : 220, transition: 'all .2s' }}>
