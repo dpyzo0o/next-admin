@@ -13,6 +13,7 @@ import { assert } from './utils/misc';
 import { Layout } from './components/Layout';
 import { Guard } from './components/Guard';
 
+// lazy load components
 const Dashboard = React.lazy(() => import('./views/Dashboard'));
 const EmotionDemo = React.lazy(() => import('./views/EmotionDemo'));
 const NotFound = React.lazy(() => import('./views/NotFound'));
@@ -23,12 +24,12 @@ const AccountCenter = React.lazy(() => import('./views/Account/AccountCenter'));
 const AccountSettings = React.lazy(() => import('./views/Account/AccountSettings'));
 
 export interface Route extends PartialRouteObject {
-  /** 是否在 menu 显示 */
+  /** auto generate menu if present */
   menu?: {
-    title?: string;
+    title?: React.ReactNode;
     icon?: React.ReactNode;
   };
-  /** 访问权限 */
+  /** whether has access to this route, will render 403 if not */
   access?: string;
   children?: Route[];
 }
@@ -203,11 +204,10 @@ function getRenderRoutes(routes: Route[]): PartialRouteObject[] {
       rest.element = <Guard accessKey={access}>{rest.element}</Guard>;
     }
 
-    if (!rest.children) {
-      return rest;
+    if (rest.children) {
+      rest.children = getRenderRoutes(rest.children);
     }
 
-    rest.children = getRenderRoutes(rest.children);
     return rest;
   });
 
