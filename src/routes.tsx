@@ -173,18 +173,16 @@ function getMenuConfig(access: Access): MenuConfig {
       .map(r => {
         const path = prefix + r.path;
 
+        const res: MenuItem = {
+          path,
+          ...r.menu,
+        };
+
         if (r.children) {
-          return {
-            ...r.menu,
-            path,
-            children: getMenus(r.children, path + '/'),
-          };
-        } else {
-          return {
-            ...r.menu,
-            path,
-          };
+          res.children = getMenus(r.children, path + '/');
         }
+
+        return res;
       });
   };
 
