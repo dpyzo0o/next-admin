@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useQuery } from 'react-query';
+import { Button } from 'antd';
 import shallow from 'zustand/shallow';
 import { useInitialState } from 'src/context/InitialStateContext';
-import { useCounterStore } from 'src/zustand-stores';
-import { Button } from 'antd';
+import { useCounterStore } from 'src/zustand';
 import { http } from 'src/utils/http';
 
 function Dashboard() {

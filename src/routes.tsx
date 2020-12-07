@@ -10,10 +10,17 @@ import {
 } from '@ant-design/icons';
 import { Access } from './access';
 import { assert } from './utils/misc';
+
+/**
+ * Import components which do not need lazy-loading, usuarally
+ * there are components required by initializing app
+ */
 import { Layout } from './components/Layout';
 import { Guard } from './components/Guard';
 
-// lazy load components
+/**
+ * Lazy-load components by routes
+ */
 const Dashboard = React.lazy(() => import('./views/Dashboard'));
 const EmotionDemo = React.lazy(() => import('./views/EmotionDemo'));
 const NotFound = React.lazy(() => import('./views/NotFound'));
@@ -23,6 +30,10 @@ const Result = React.lazy(() => import('./views/Result'));
 const AccountCenter = React.lazy(() => import('./views/Account/AccountCenter'));
 const AccountSettings = React.lazy(() => import('./views/Account/AccountSettings'));
 
+/**
+ * Extend react-router's config to allow menu auto-generation
+ * and more fine-grained auth control
+ */
 export interface Route extends PartialRouteObject {
   /** auto generate menu if present */
   menu?: {

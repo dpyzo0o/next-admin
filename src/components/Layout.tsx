@@ -89,7 +89,7 @@ function Layout() {
                   align-items: center;
                 `}
               >
-                <Spin spinning />
+                <Spin size="large" />
               </div>
             }
           >

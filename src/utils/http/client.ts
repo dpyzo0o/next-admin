@@ -8,9 +8,8 @@ function createHttpClient() {
   }
 
   httpClient = axios.create({
-    timeout: 2000,
     headers: {
-      flag: 'client',
+      'x-sent-from': 'client',
     },
   });
 

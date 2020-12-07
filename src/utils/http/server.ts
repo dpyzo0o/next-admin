@@ -8,9 +8,8 @@ function createHttpServer() {
   }
 
   httpServer = axios.create({
-    timeout: 6000,
     headers: {
-      flag: 'server',
+      'x-sent-from': 'server',
     },
   });
 
