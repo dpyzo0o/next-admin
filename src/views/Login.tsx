@@ -70,7 +70,7 @@ function Login() {
               },
             ]}
           >
-            <Input placeholder="Username" />
+            <Input placeholder="admin or user" />
           </Form.Item>
           <Form.Item
             name="password"
@@ -81,7 +81,7 @@ function Login() {
               },
             ]}
           >
-            <Input.Password placeholder="Password" />
+            <Input.Password placeholder="123456" />
           </Form.Item>
           <Form.Item noStyle>
             <Button type="primary" htmlType="submit" css={{ width: '100%' }} loading={loading}>
