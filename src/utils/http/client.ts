@@ -7,11 +7,7 @@ function createHttpClient() {
     return httpClient;
   }
 
-  httpClient = axios.create({
-    headers: {
-      'x-sent-from': 'client',
-    },
-  });
+  httpClient = axios.create();
 
   return httpClient;
 }

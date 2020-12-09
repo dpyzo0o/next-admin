@@ -7,11 +7,7 @@ function createHttpServer() {
     return httpServer;
   }
 
-  httpServer = axios.create({
-    headers: {
-      'x-sent-from': 'server',
-    },
-  });
+  httpServer = axios.create();
 
   return httpServer;
 }
