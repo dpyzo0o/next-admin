@@ -20,7 +20,8 @@ function Header({ collapsed, onCollapsed }: HeaderProps) {
 
   const handleLogout = async () => {
     try {
-      await http.get('/api/logout');
+      // https://github.com/vvo/next-iron-session/issues/274
+      await http.post('/api/logout');
       await refetch();
       navigate('/login');
     } catch (error) {
