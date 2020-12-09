@@ -11,7 +11,8 @@ export function withSession(handler: Handler) {
     password: 'replace-me-with-a-super-strong-password',
     cookieName: 'next-admin',
     cookieOptions: {
-      secure: process.env.NODE_ENV === 'production',
+      // secure: process.env.NODE_ENV === 'production',
+      secure: false,
     },
   });
 }
