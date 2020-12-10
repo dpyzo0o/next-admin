@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { css } from '@emotion/react';
+import { Button, Result } from 'antd';
 import { FullScreenSpinner } from 'src/components/FullScreenSpinner';
 import { InitialState, getInitialState } from 'src/initialState';
 
@@ -49,8 +51,29 @@ function InitialStateProvider({ children }: React.PropsWithChildren<unknown>) {
     return <FullScreenSpinner />;
   }
 
-  if (error) {
-    return <div>Init project failed.</div>;
+  if (error || !state) {
+    return (
+      <div
+        css={css`
+          width: 100vw;
+          height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        `}
+      >
+        <Result
+          status="error"
+          title="Application failed to bootsrtap."
+          subTitle="Please make sure your getInitialState function successfully returns."
+          extra={
+            <Button type="ghost" onClick={() => window.location.reload()}>
+              Reload
+            </Button>
+          }
+        />
+      </div>
+    );
   }
 
   return <InitialStateContext.Provider value={value}>{children}</InitialStateContext.Provider>;

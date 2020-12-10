@@ -13,13 +13,8 @@ function Dashboard() {
   const { initialState } = useInitialState();
   const { user } = initialState;
 
-  const { count, loading, increase, asyncIncrease } = useCounterStore(
-    state => ({
-      count: state.count,
-      loading: state.loading,
-      increase: state.increase,
-      asyncIncrease: state.asyncIncrease,
-    }),
+  const [count, loading, increase, asyncIncrease] = useCounterStore(
+    state => [state.count, state.loading, state.increase, state.asyncIncrease],
     shallow
   );
 

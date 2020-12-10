@@ -7,12 +7,16 @@ function createHttpServer() {
     return httpServer;
   }
 
-  httpServer = axios.create();
+  httpServer = axios.create({
+    headers: {
+      'x-sent-from': 'server',
+    },
+  });
 
   return httpServer;
 }
 
-function setHttpServerHeaders(headers: { [key: string]: any }) {
+function setHttpServerHeaders(headers: Record<string, any>) {
   const instance = createHttpServer();
   for (const key in headers) {
     instance.defaults.headers.common[key] = headers[key];

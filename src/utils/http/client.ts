@@ -7,12 +7,16 @@ function createHttpClient() {
     return httpClient;
   }
 
-  httpClient = axios.create();
+  httpClient = axios.create({
+    headers: {
+      'x-sent-from': 'client',
+    },
+  });
 
   return httpClient;
 }
 
-function setHttpClientHeaders(headers: { [key: string]: any }) {
+function setHttpClientHeaders(headers: Record<string, any>) {
   const instance = createHttpClient();
   for (const key in headers) {
     instance.defaults.headers.common[key] = headers[key];
