@@ -9,10 +9,9 @@ type Handler = (
 export function withSession(handler: Handler) {
   return withIronSession(handler, {
     password: 'replace-me-with-a-super-strong-password',
-    cookieName: 'next-admin',
+    cookieName: 'dpyzo0o/next-admin',
     cookieOptions: {
-      // secure: process.env.NODE_ENV === 'production',
-      secure: false,
+      secure: process.env.NODE_ENV === 'production',
     },
   });
 }
